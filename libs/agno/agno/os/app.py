@@ -85,7 +85,7 @@ class AgentOS:
         base_app: Optional[FastAPI] = None,
         replace_routes: Optional[bool] = None,  # Deprecated
         on_route_conflict: Literal["preserve_agentos", "preserve_base_app", "error"] = "preserve_agentos",
-        telemetry: bool = True,
+        telemetry: bool = False,
     ):
         """Initialize AgentOS.
 
@@ -597,7 +597,7 @@ class AgentOS:
         self,
         app: Union[str, FastAPI],
         *,
-        host: str = "localhost",
+        host: str = "0.0.0.0",
         port: int = 7777,
         reload: bool = False,
         workers: Optional[int] = None,
@@ -605,32 +605,33 @@ class AgentOS:
     ):
         import uvicorn
 
-        if getenv("AGNO_API_RUNTIME", "").lower() == "stg":
-            public_endpoint = "https://os-stg.agno.com/"
-        else:
-            public_endpoint = "https://os.agno.com/"
+        # if getenv("AGNO_API_RUNTIME", "").lower() == "stg":
+        #     public_endpoint = "https://os-stg.agno.com/"
+        # else:
+        #     public_endpoint = "https://os.agno.com/"
 
-        # Create a terminal panel to announce OS initialization and provide useful info
-        from rich.align import Align
-        from rich.console import Console, Group
+        # # Create a terminal panel to announce OS initialization and provide useful info
+        # from rich.align import Align
+        # from rich.console import Console, Group
 
-        panel_group = [
-            Align.center(f"[bold cyan]{public_endpoint}[/bold cyan]"),
-            Align.center(f"\n\n[bold dark_orange]OS running on:[/bold dark_orange] http://{host}:{port}"),
-        ]
-        if bool(self.settings.os_security_key):
-            panel_group.append(Align.center("\n\n[bold chartreuse3]:lock: Security Enabled[/bold chartreuse3]"))
+        # panel_group = [
+        #     Align.center(f"[bold cyan]{public_endpoint}[/bold cyan]"),
+        #     Align.center(f"\n\n[bold dark_orange]OS running on:[/bold dark_orange] http://{host}:{port}"),
+        # ]
+        # if bool(self.settings.os_security_key):
+        #     panel_group.append(Align.center("\n\n[bold chartreuse3]:lock: Security Enabled[/bold chartreuse3]"))
 
-        console = Console()
-        console.print(
-            Panel(
-                Group(*panel_group),
-                title="AgentOS",
-                expand=False,
-                border_style="dark_orange",
-                box=box.DOUBLE_EDGE,
-                padding=(2, 2),
-            )
-        )
+        # console = Console()
+        # console.print(
+        #     Panel(
+        #         Group(*panel_group),
+        #         title="AgentOS",
+        #         expand=False,
+        #         border_style="dark_orange",
+        #         box=box.DOUBLE_EDGE,
+        #         padding=(2, 2),
+        #     )
+        # )
 
+        logger.info(f"Starting agent endpoint on http://{host}:{port}")
         uvicorn.run(app=app, host=host, port=port, reload=reload, workers=workers, **kwargs)

@@ -303,7 +303,7 @@ def update_cors_middleware(app: FastAPI, new_origins: list):
     # Add updated CORS
     app.add_middleware(
         CORSMiddleware,  # type: ignore
-        allow_origins=final_origins,
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

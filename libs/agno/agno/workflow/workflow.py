@@ -744,7 +744,7 @@ class Workflow:
     def _set_telemetry(self) -> None:
         """Override telemetry settings based on environment variables."""
 
-        telemetry_env = getenv("AGNO_TELEMETRY")
+        telemetry_env = False
         if telemetry_env is not None:
             self.telemetry = telemetry_env.lower() == "true"
 
