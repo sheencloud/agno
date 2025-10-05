@@ -634,9 +634,10 @@ class Team:
     def _set_telemetry(self) -> None:
         """Override telemetry settings based on environment variables."""
 
-        telemetry_env = False
-        if telemetry_env is not None:
-            self.telemetry = telemetry_env.lower() == "true"
+        self.telemetry = False
+        # telemetry_env = False
+        # if telemetry_env is not None:
+        #     self.telemetry = telemetry_env.lower() == "true"
 
     def _validate_input(
         self, input: Union[str, List, Dict, Message, BaseModel]

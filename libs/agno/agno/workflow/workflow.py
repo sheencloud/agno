@@ -743,10 +743,10 @@ class Workflow:
 
     def _set_telemetry(self) -> None:
         """Override telemetry settings based on environment variables."""
-
-        telemetry_env = False
-        if telemetry_env is not None:
-            self.telemetry = telemetry_env.lower() == "true"
+        self.telemetry = False
+        # telemetry_env = False
+        # if telemetry_env is not None:
+        #     self.telemetry = telemetry_env.lower() == "true"
 
     def _propagate_debug_to_step(self, step):
         """Recursively propagate debug mode to steps and nested primitives"""
